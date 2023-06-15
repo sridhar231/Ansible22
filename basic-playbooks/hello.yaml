@@ -1,0 +1,19 @@
+---
+- name: hello ansible
+  hosts: all
+  become: yes
+  tasks:
+    - name: update packages and install tree
+      apt: tree
+      state: present
+
+ ---
+ name: install apache
+ hosts: all
+ become: yes
+ tasks:
+   - name: install apche2
+     ansible.builtin.apt:
+       name: apache
+       state: present 
+       update_cache: true

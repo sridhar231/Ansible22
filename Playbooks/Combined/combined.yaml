@@ -1,0 +1,78 @@
+---
+- name: installing lamp on redhat
+  hosts: all
+  become: yes
+  vars:
+    info_page_path: /var/www/html/info.php
+  tasks:
+    - name: print os details
+      ansible.builtin.debug:
+        msg: "family: {{ ansible_facts['os_family'] }} distribution: {{ ansible_facts['distribution'] }}"
+
+    - name: installing httpd
+      ansible.builtin.yum:
+        name: "{{ package_name }}"
+        state: absent
+      when: ansible_facts['os_family'] == 'RedHat'  
+    - name: Enabling and starting httpd
+      ansible.builtin.systemd:
+        name: "{{ package_name }}"
+        enabled: yes
+        state: started
+      when: ansible_facts['os_family'] == 'RedHat'   
+    - name: installing PHP
+      ansible.builtin.yum:
+        name:
+          - php
+        state: absent
+      notify: 
+        - Restart apache2  
+      when: ansible_facts['os_family'] == 'RedHat'  
+    - name: copying info.php file
+      ansible.builtin.copy:
+        src: info.php
+        dest: "{{ info_page_path }}"
+      notify:
+        - Restart apache2  
+      when: ansible_facts['os_family'] == 'RedHat'   
+    - name: install apache2 server
+      ansible.builtin.apt:
+        name: "{{ package_name }}"
+        state: absent
+        update_cache: yes
+      when: ansible_facts['os_family'] == 'Debian'    
+    - name: install php server
+      ansible.builtin.apt:
+        name: 
+          - php
+          - libapache2-mod-php
+          - php-mysql
+        state: absent
+      notify: 
+        - Restart apache2  
+      when: ansible_facts['os_family'] == 'Debian'      
+    - name: copy
+      ansible.builtin.copy:
+        src: info.php
+        dest: "{{ info_page_path }}"
+      when: ansible_facts['os_family'] == 'Debian'    
+  handlers:
+    - name: Restart apache2
+      ansible.builtin.systemd:
+        name: "{{ package_name }}"
+        state: restarted
+    
+       
+              
+
+
+
+        
+           
+
+        
+         
+              
+
+               
+

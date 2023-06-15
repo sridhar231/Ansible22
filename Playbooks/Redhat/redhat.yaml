@@ -1,0 +1,51 @@
+---
+- name: installing lamp on redhat
+  hosts: all
+  become: yes
+  tasks:
+    - name: installing httpd
+      ansible.builtin.yum:
+        name: httpd
+        state: present
+    - name: Enabling and starting httpd
+      ansible.builtin.systemd:
+        name: httpd
+        enabled: yes
+        state: started
+    - name: installing PHP
+      ansible.builtin.yum:
+        name:
+          - php
+        state: present
+      notify:
+        - restart httpd
+    - name: copying info.php file
+      ansible.builtin.copy:
+        src: info.php
+        dest: /var/www/html/info.php
+      notify:
+        - restart httpd
+  handlers:
+    - name: restart httpd
+      ansible.builtin.systemd:
+        name: httpd
+        state: restarted 
+- name: installing JDK-8
+  hosts: all
+  become: yes
+  tasks:
+    - name: install nginx server
+      ansible.builtin.yum:
+        name: openjdk-8-jdk 
+        state: present
+
+
+        
+           
+
+        
+         
+              
+
+               
+

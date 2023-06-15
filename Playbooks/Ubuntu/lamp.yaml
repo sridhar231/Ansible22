@@ -1,0 +1,46 @@
+---
+- name: install lamp server
+  hosts: webserver
+  become: yes
+  tasks:
+    - name: install apache2 server
+      ansible.builtin.apt:
+        name: apache2 
+        state: present
+        update_cache: true
+    - name: install php server
+      ansible.builtin.apt:
+        name: 
+          - php
+          - libapache2-mod-php
+          - php-mysql
+        state: present
+        update_cache: true
+      notify: 
+        - Restart apache2     
+    - name: copy
+      ansible.builtin.copy:
+        src: info.php
+        dest: /var/www/html/info.php
+  handlers:
+    - name: Restart apache2
+      ansible.builtin.systemd:
+        name: apache2
+        state: restarted
+- name: installing JDK-8
+  hosts: all
+  become: yes
+  tasks:
+    - name: install nginx server
+      ansible.builtin.apt:
+        name: openjdk-8-jdk 
+        state: present
+        update_cache: true
+           
+
+        
+         
+              
+
+               
+

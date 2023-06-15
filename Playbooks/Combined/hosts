@@ -1,0 +1,10 @@
+[Ubuntu]
+172.31.27.64 package_name=apache2
+
+[RedHat]
+172.31.24.246 package_name=httpd
+
+[webserver]
+172.31.27.64
+172.31.24.246
+

@@ -1,0 +1,33 @@
+#### ubuntu
+-----------
+
+sudo apt update
+sudo apt install apache2 -y
+sudo apt install php libapache2-mod-php php-mysql -y
+# Create a file called as /var/www/html/info.php with below content
+# <?php phpinfo(); ?>
+sudo -i
+echo '<?php phpinfo(); ?>' > /var/www/html/info.php
+exit
+sudo systemctl restart apache2
+
+
+$$$$ redhat
+-----------
+
+sudo yum install httpd -y
+sudo systemctl enable httpd
+sudo systemctl start httpd
+sudo yum install php -y
+sudo -i
+echo '<?php phpinfo(); ?>' > /var/www/html/info.php
+exit
+sudo systemctl restart httpd
+
+#### dotnet7:
+-------------
+
+wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
+sudo chmod +x ./dotnet-install.sh
+./dotnet-install.sh --channel 7.0
+export PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools

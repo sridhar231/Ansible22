@@ -1,0 +1,20 @@
+---
+- name: install apache2 server
+  hosts: all
+  become: yes
+  tasks:
+    - name: install apache2
+      ansible.builtin.apt:
+        name: apache2
+        update_cache: true
+        state: present
+    ---
+- name: install apache server
+  hosts: all
+  become: yes
+  tasks:
+    - name: install apache
+      ansible.builtin.apt:
+        name: apache2
+        update_cache: yes
+        state: present
