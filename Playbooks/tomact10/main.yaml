@@ -32,8 +32,6 @@
       ansible.builtin.file:
         src: /opt/tomcat/apache-tomcat-10.1.9
         dest: /opt/tomcat/latest
-        owner: tomcat
-        group: tomcat
         state: link
     - name: Recursively change ownership of a directory
       ansible.builtin.file:
@@ -50,7 +48,7 @@
       ansible.builtin.copy:
         src: tomcat.service
         dest: /etc/systemd/system/tomcat.service
-        
+       
     - name: daemon-reload to pick up config changes
       ansible.builtin.systemd:
         state: restarted
@@ -68,22 +66,31 @@
         dest: /opt/tomcat/latest/conf/tomcat-users.xml
         owner: tomcat
         group: tomcat
+    - name: restart tomcat
+      ansible.builtin.systemd:
+        name: tomcat
+        state: restarted    
     - name: Copy using Manager app
       ansible.builtin.copy:
         src: context.xml
         dest: /opt/tomcat/latest/webapps/manager/META-INF/context.xml
         owner: tomcat
         group: tomcat
+    - name: restart tomcat
+      ansible.builtin.systemd:
+        name: tomcat
+        state: restarted    
     - name: Copy using Host Manager a/etcpp
       ansible.builtin.copy:
         src: context.xml
         dest: /opt/tomcat/latest/webapps/host-manager/META-INF/context.xml  
         owner: tomcat
         group: tomcat  
-    - name: restart tomcat1
+    - name: restart tomcat
       ansible.builtin.systemd:
         name: tomcat
-        state: restarted           
+        state: restarted    
+   
 
 
              
