@@ -1,0 +1,83 @@
+---
+- name: install tomcat on ubuntu
+  hosts: all
+  become: yes 
+  tasks:
+    - name: install java
+      ansible.builtin.apt:
+        name: openjdk-11-jdk
+        state: present
+        update_cache: yes
+    - name: group add
+      ansible.builtin.group:
+        name: tomcat
+        state: present
+    - name: user add
+      ansible.builtin.user:
+        name: tomcat
+        create_home: yes
+        home: /opt/tomcat
+        shell: /bin/false 
+        group: tomcat
+    - name: downlod tomcat
+      ansible.builtin.get_url:
+        url: https://www-eu.apache.org/dist/tomcat/tomcat-10/v10.1.9/bin/apache-tomcat-10.1.9.tar.gz
+        dest: /tmp/apache-tomcat-10.1.9.tar.gz
+    - name: archive the file
+      ansible.builtin.unarchive:
+        src: /tmp/apache-tomcat-10.1.9.tar.gz
+        dest: /opt/tomcat/
+        remote_src: yes
+    - name: creating symlink
+      ansible.builtin.file:
+        src: /opt/tomcat/apache-tomcat-10.1.9
+        dest: /opt/tomcat/latest
+        owner: tomcat
+        group: tomcat
+        state: link
+    - name: Recursively change ownership of a directory
+      ansible.builtin.file:
+        path: /opt/tomcat
+        state: directory
+        recurse: yes
+        owner: tomcat
+        group: tomcat
+    - name: gave execute permissions
+      ansible.builtin.shell:
+        cmd: chmod +x /opt/tomcat/latest/bin/*.sh
+
+    - name: Copy using inline content
+      ansible.builtin.copy:
+        src: tomcat.service
+        dest: /etc/systemd/system/tomcat.service
+        
+    - name: daemon-reload to pick up config changes
+      ansible.builtin.systemd:
+        state: restarted
+        daemon_reload: true
+        name: tomcat
+    
+    - name: Enabling and starting tomcat
+      ansible.builtin.systemd:
+        name: tomcat
+        enabled: yes
+        state: started 
+    - name: Copy using USERS
+      ansible.builtin.copy:
+        src: tomcat-users.xml
+        dest: /opt/tomcat/latest/conf/tomcat-users.xml
+    - name: Copy using Manager app
+      ansible.builtin.copy:
+        src: context.xml
+        dest: /opt/tomcat/latest/webapps/manager/META-INF/context.xml
+    - name: Copy using Host Manager a/etcpp
+      ansible.builtin.copy:
+        src: context.xml
+        dest: /opt/tomcat/latest/webapps/host-manager/META-INF/context.xml           
+
+
+             
+        
+          
+         
+
