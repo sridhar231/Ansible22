@@ -66,14 +66,20 @@
       ansible.builtin.copy:
         src: tomcat-users.xml
         dest: /opt/tomcat/latest/conf/tomcat-users.xml
+        owner: tomcat
+        group: tomcat
     - name: Copy using Manager app
       ansible.builtin.copy:
         src: context.xml
         dest: /opt/tomcat/latest/webapps/manager/META-INF/context.xml
+        owner: tomcat
+        group: tomcat
     - name: Copy using Host Manager a/etcpp
       ansible.builtin.copy:
         src: context.xml
-        dest: /opt/tomcat/latest/webapps/host-manager/META-INF/context.xml    
+        dest: /opt/tomcat/latest/webapps/host-manager/META-INF/context.xml  
+        owner: tomcat
+        group: tomcat  
     - name: restart tomcat1
       ansible.builtin.systemd:
         name: tomcat
