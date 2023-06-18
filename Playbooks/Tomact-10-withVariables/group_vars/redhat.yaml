@@ -1,0 +1,11 @@
+---
+java_package: openjdk-11-jdk
+home_dir: /opt/tomcat
+shell: /bin/false 
+tomcat_version: 10.1.9
+tomcat_major_version: 10
+user: tomcat
+group: tomcat
+tomcat_user_name: qtdevops
+tomcat_user_pwd: qtdevops
+tomcat_context_valve_allow: ".*"

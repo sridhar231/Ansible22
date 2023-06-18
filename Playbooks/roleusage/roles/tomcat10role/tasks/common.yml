@@ -1,0 +1,126 @@
+---
+- name: group create
+    ansible.builtin.group:
+      name: "{{ group }}"
+      state: present
+  tags:
+      - user 
+      - config
+- name: user add
+  ansible.builtin.user:
+    name: "{{ user }}"
+    create_home: yes
+    home: "{{ home_dir }}"
+    shell: "{{ shell }}"
+    group: "{{ group }}"
+  tags:
+    - user 
+    - config  
+- name: downlod tomcat
+  ansible.builtin.get_url:
+    url: " https://www-eu.apache.org/dist/tomcat/tomcat-{{ tomcat_major_version}}/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz "
+    dest: /tmp/apache-tomcat-"{{ tomcat_version }}".tar.gz
+  tags:
+    - tomcat 
+    - config 
+- name: find if the tomcat is already extracted
+    ansible.builtin.stat:
+      path: "{{ homedir }}/apache-tomcat-{{ tomcat_version }}/LICENSE"
+  register: license_info
+  tags:
+      - tomcat
+      - config     
+- name: archive the file
+    ansible.builtin.unarchive:
+      src: "/tmp/apache-tomcat-{{ tomcat_version }}.tar.gz"
+      dest: "{{ home_dir }}"
+      remote_src: yes
+  tags:
+      - tomcat 
+      - config   
+- name: creating symlink
+    ansible.builtin.file:
+      src: "{{ home_dir }}/apache-tomcat-{{ tomcat_version }}"
+      dest: "{{ home_dir }}/latest"
+      owner: tomcat
+      group: "{{ group }}"
+      state: link
+  notify:
+      - Recursively change ownership of a directory
+      - Add execute permissions for shell scripts
+  tags:
+      - tomcat
+      - config  
+  - name: Flush handlers
+    meta: flush_handlers    
+
+  - name: Copy using inline service content
+    ansible.builtin.copy:
+      src: "tomcat.service_{{ ansible_facts['distribution'] }}.j2"
+      dest: /etc/systemd/system/tomcat.service
+    notify:
+    - reload daemon
+    tags:
+      - tomcat
+      - config 
+
+  - name:  Enabling and starting tomcat
+    ansible.builtin.systemd:
+      name: tomcat
+      enabled: yes
+      state: started
+    tags:
+        - tomcat
+        - config    
+  - name: Copy using configure the tomcat users xml
+    ansible.builtin.copy:
+      src: tomcat-users.xml.j2
+      dest: "{{ home_dir }}/latest/conf/tomcat-users.xml"
+      owner: "{{ user }}"
+      group: "{{ group }}"
+    notify:
+      - restart tomcat
+    tags:
+      - tomcat
+      - config
+  - name: Allow using Manager app
+    ansible.builtin.copy:
+      src: context.xml.j2
+      dest: "{{ home_dir }}/latest/webapps/manager/META-INF/context.xml"
+      owner: "{{ user }}"
+      group: "{{ group }}"
+    notify:
+        - restart tomcat
+    tags:
+        - tomcat
+        - config  
+  - name: Allow using Host Manager app
+    ansible.builtin.copy:
+      src: context.xml
+      dest: "{{ home_dir }}/latest/webapps/host-manager/META-INF/context.xml"
+      owner: "{{ user }}"
+      group: "{{ group }}"
+    notify:
+        - restart tomcat
+    tags:
+        - tomcat
+        - config   
+
+  handlers:
+    - name: daemon-reload to pick up config changes
+      ansible.builtin.systemd:
+        daemon_reload: yes
+    - name: Recursively change ownership of a directory
+      ansible.builtin.file:
+        path: "{{ home_dir }}"
+        state: directory
+        recurse: yes
+        owner: "{{ user }}"
+        group: "{{ group }}"
+    - name: gave execute permissions
+      ansible.builtin.shell:
+      cmd: "chmod +x {{ home_dir }}/latest/bin/*.sh"    
+    - name: restart tomcat1
+      ansible.builtin.systemd:
+        name: tomcat
+        state: restarted

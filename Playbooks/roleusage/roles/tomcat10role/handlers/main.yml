@@ -1,0 +1,20 @@
+---
+# handlers file for generic
+
+- name: daemon-reload to pick up config changes
+  ansible.builtin.systemd:
+    daemon_reload: yes
+- name: Recursively change ownership of a directory
+  ansible.builtin.file:
+    path: "{{ home_dir }}"
+    state: directory
+    recurse: yes
+    owner: "{{ user }}"
+    group: "{{ group }}"
+- name: gave execute permissions
+  ansible.builtin.shell:
+  cmd: "chmod +x {{ home_dir }}/latest/bin/*.sh"    
+- name: restart tomcat1
+  ansible.builtin.systemd:
+    name: tomcat
+    state: restarted

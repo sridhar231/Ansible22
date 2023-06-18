@@ -1,0 +1,11 @@
+---
+- name: install java
+  ansible.builtin.apt:
+    name: "{{ java_package_Ubuntu }}"
+    state: present
+    update_cache: yes
+  tags:
+    - java
+    - prereq  
+  
+    

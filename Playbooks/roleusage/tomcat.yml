@@ -1,0 +1,6 @@
+---
+- name: install tomcat
+  become: yes
+  hosts: all
+  roles: 
+    - tomcat10role

@@ -1,0 +1,9 @@
+- name: install java-11-openjdk
+  ansible.builtin.apt:
+    name: "{{ java_package_RedHat }}"
+    state: present
+    update_cache: yes
+- name: stop firewall-cmd
+  ansible.builtin.systemd:
+    name: firewall-cmd
+    state: stopped   
