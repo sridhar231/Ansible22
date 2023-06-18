@@ -21,6 +21,6 @@ root@ip-172-31-27-2:/opt/tomcat/latest/webapps/host-manager/META-INF# cat contex
   <CookieProcessor className="org.apache.tomcat.util.http.Rfc6265CookieProcessor"
                    sameSiteCookies="strict" />
   <Valve className="org.apache.catalina.valves.RemoteAddrValve"
-         allow="127\.\d+\.\d+\.\d+|::1|*" />
+         allow="*" />
   <Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>
 </Context>
