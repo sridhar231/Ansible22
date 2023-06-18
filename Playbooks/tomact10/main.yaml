@@ -51,10 +51,8 @@
        
     - name: daemon-reload to pick up config changes
       ansible.builtin.systemd:
-        state: restarted
-        daemon_reload: true
-        name: tomcat
-    
+        daemon_reload: yes
+        
     - name: Enabling and starting tomcat
       ansible.builtin.systemd:
         name: tomcat
