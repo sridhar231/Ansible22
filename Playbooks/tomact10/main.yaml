@@ -49,10 +49,6 @@
         src: tomcat.service
         dest: /etc/systemd/system/tomcat.service
        
-    - name: daemon-reload to pick up config changes
-      ansible.builtin.systemd:
-        daemon_reload: yes
-        
     - name: Enabling and starting tomcat
       ansible.builtin.systemd:
         name: tomcat
