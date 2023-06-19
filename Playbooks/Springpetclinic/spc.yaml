@@ -13,6 +13,6 @@
     - name: Clone a repo with separate git directory
       ansible.builtin.git:
         repo:  https://github.com/spring-projects/spring-petclinic.git
-        dest: $HOME/spc
+        dest: /home/devops/spc
 
 
