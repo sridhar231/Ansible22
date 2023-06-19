@@ -16,9 +16,11 @@
         dest: /home/devops/spc
     - name: packaging Springpetclinic
       ansible.builtin.command:
-        argv:
-          - cd [/home/devops/spc]
-          - mvn package
+        cmd: cd /home/devops/spc
+    - name: packaging Springpetclinic
+      ansible.builtin.command:
+        cmd: mvn package      
+           
 
 
 
