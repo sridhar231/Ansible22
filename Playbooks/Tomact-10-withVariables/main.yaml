@@ -111,7 +111,7 @@
         - config  
   - name: Allow using Host Manager app
     ansible.builtin.copy:
-      src: context.xml
+      src: context.xml.j2
       dest: "{{ home_dir }}/latest/webapps/host-manager/META-INF/context.xml"
       owner: "{{ user }}"
       group: "{{ group }}"
