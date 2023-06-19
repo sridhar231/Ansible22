@@ -15,8 +15,8 @@
         repo:  https://github.com/spring-projects/spring-petclinic.git
         dest: /home/devops/spc
     - name: packaging Springpetclinic
-      ansible.builtin.command: 
-        cmd: chdir=/spc
+      command: chdir=/spc
+         
   
     
     
