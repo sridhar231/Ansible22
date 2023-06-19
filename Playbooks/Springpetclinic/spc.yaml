@@ -16,8 +16,7 @@
         dest: /home/devops/spc
     - name: Go to the folder and execute command
       ansible.builtin.shell:
-        args:
-          - chdir: spc/
+        chdir: /home/devops/spc/
     
          
   
