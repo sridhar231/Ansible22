@@ -43,7 +43,7 @@
       - config  
   - name: find if the tomcat is already extracted
     ansible.builtin.stat:
-      path: "{{ homedir }}/apache-tomcat-{{ tomcat_version }}/LICENSE"
+      path: "{{ home_dir }}/apache-tomcat-{{ tomcat_version }}/LICENSE"
     register: license_info
     tags:
       - tomcat
