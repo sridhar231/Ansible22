@@ -15,11 +15,12 @@
         repo:  https://github.com/spring-projects/spring-petclinic.git
         dest: /home/devops/spc
     - name: packaging Springpetclinic
-      ansible.builtin.command:
-        cmd: cd /spc/
-    - name: packaging Springpetclinic
-      ansible.builtin.command:
-        cmd: mvn package      
+      ansible.builtin.command: chdir =  /spc
+        cmd: chdir=/spc
+  
+    
+    
+    
            
 
 
