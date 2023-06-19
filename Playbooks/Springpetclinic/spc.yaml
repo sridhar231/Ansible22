@@ -1,0 +1,17 @@
+---
+- name: install Springpetclinic
+  hosts: all
+  become: yes
+  tasks:
+    - name: install java-17 and maven
+      ansible.builtin.apt:
+        name: 
+          - openjdk-17-jdk
+          - maven
+        update_cache: yes
+        state: present
+    - name: Clone a repo with separate git directory
+      ansible.builtin.git:
+        repo:  https://github.com/spring-projects/spring-petclinic.git
+        dest: $HOME/ubuntu
+        
