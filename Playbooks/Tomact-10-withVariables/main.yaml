@@ -132,7 +132,7 @@
     - name: Add execute permissions for shell scripts
       ansible.builtin.shell:
         cmd: "chmod +x {{ home_dir }}/latest/bin/*.sh"    
-    - name: restart tomcat1
+    - name: restart tomcat
       ansible.builtin.systemd:
         name: tomcat
         state: restarted
