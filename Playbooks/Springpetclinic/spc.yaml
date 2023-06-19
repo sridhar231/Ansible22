@@ -14,8 +14,10 @@
       ansible.builtin.git:
         repo:  https://github.com/spring-projects/spring-petclinic.git
         dest: /home/devops/spc
-        chdir: spc/
- 
+    - name: Go to the folder and execute command
+      ansible.builtin.shell:
+        args:
+          - chdir: spc/
     
          
   
