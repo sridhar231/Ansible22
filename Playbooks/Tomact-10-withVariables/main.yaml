@@ -52,7 +52,7 @@
     ansible.builtin.unarchive:
       src: "/tmp/apache-tomcat-{{ tomcat_version }}.tar.gz"
       dest: "{{ home_dir }}"
-      
+      remote_src: yes
     tags:
       - tomcat 
       - config   
