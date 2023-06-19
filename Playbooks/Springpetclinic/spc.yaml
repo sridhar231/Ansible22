@@ -14,8 +14,8 @@
       ansible.builtin.git:
         repo:  https://github.com/spring-projects/spring-petclinic.git
         dest: /home/devops/spc
-    - name: packaging Springpetclinic
-      command: chdir=/spc
+    - name: Go to the folder and execute command
+      command: chdir=/opt/   
          
   
     
