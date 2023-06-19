@@ -76,8 +76,6 @@
     ansible.builtin.copy:
       src: tomcat.service.j2
       dest: /etc/systemd/system/tomcat.service
-    notify:
-    - daemon-reload to pick up config changes
     tags:
       - tomcat
       - config 
@@ -124,9 +122,6 @@
         - config   
 
   handlers:
-    - name: daemon-reload to pick up config changes
-      ansible.builtin.systemd:
-        daemon_reload: yes
     - name: Recursively change ownership of a directory
       ansible.builtin.file:
         path: "{{ home_dir }}"
