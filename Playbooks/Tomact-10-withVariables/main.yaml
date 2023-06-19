@@ -137,7 +137,7 @@
         group: "{{ group }}"
     - name: gave execute permissions
       ansible.builtin.shell:
-      cmd: "chmod +x {{ home_dir }}/latest/bin/*.sh"    
+        cmd: "chmod +x {{ home_dir }}/latest/bin/*.sh"    
     - name: restart tomcat1
       ansible.builtin.systemd:
         name: tomcat
