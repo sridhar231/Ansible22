@@ -82,7 +82,7 @@
       - tomcat
       - config 
 
-  - name:  Enabling and starting tomcat
+  - name: Enabling and starting tomcat
     ansible.builtin.systemd:
       name: tomcat
       enabled: yes
