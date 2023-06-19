@@ -17,9 +17,9 @@
     - name: packaging Springpetclinic
       ansible.builtin.command:
         argv:
-          - cd /home/devops/spc
+          - cd [/home/devops/spc]
           - mvn package
-          
+
 
 
 
