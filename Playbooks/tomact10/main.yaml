@@ -77,13 +77,14 @@
         state: restarted    
     - name: Copy using Host Manager a/etcpp
       ansible.builtin.copy:
-        src: context.xml
-        dest: /opt/tomcat/latest/webapps/host-manager/META-INF/context.xml  
+        src: context.xml.j2
+        dest: /opt/tomcat/latest/webapps/host-manager/META-INF/context.xml.j2 
         owner: tomcat
         group: tomcat  
     - name: restart tomcat
       ansible.builtin.systemd:
         name: tomcat
+        enabled: yes
         state: restarted    
    
 

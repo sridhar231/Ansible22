@@ -1,0 +1,57 @@
+##### Tasks  27-05-2023 ######
+Run the following applications 1. Open MRS [refer here: https://www.linuxcloudvps.com/blog/how-to-install-openmrs-on-ubuntu-20-04/ ] you can refer other documentations
+2. Shopizer [refer here: https://github.com/shopizer-ecommerce/shopizer ] you can refer other documentations
+3. BroadLeaf[refer here: https://github.com/BroadleafCommerce/BroadleafCommerce ] you can refer other documentations
+
+
+Note:
+1. students done with kubernetes run the above applications in cluster
+2. Students who done with docker run the above applications in containers
+3. students who didn't complete docker and kubernetes, you can run applications manually as we run spring petclinic earlier.
+
+
+
+
+Date:14/06/2023 Ansible-Tasks:
+==============================
+
+ 
+
+1. Deploy Spring-pet clinic application playbook from ansbile through Jenkins/Azure DevOps CI/CD pipeline (It is for who have completed Jenkins)
+    setup: Jenkins/Azure Devops server with 1 node/agent and install ansible in node with one inventory
+2. Write a ansbile playbook to install Broadleaf Commerce  (It is for who have not completed Jenkins)
+3. write roles for Broadleaf commerce, NOP commerce and OPEN MRS,
+
+
+
+################################# ANSIBLE TASKS ########################################
+---------------------------------------------------------------------------------------------------------------------------------------
+Task-1, 30-05-2023
+-----------------
+ 1. Ansible controlNode and Node configuration
+        1. take 3 machines
+            1. controlNode(ubuntu)
+            2. node1 (ubuntu)
+            3. node2 (redhat/centos)
+---------------------------------------------------------------------------------------------------------------------------------------
+Task-2, 31-05-2023 and 01-06-2023
+-------------------------------------------
+ 1. Install apache,nginx and java11 manually and later with playbook.
+ 2. now write a playbook for each node to get php info page (you can use handler)
+---------------------------------------------------------------------------------------------------------------------------------------
+Task-3, 02-06-2023
+-----------------------
+ 1. install metricbeat installation on ubuntu vm.(Manually)
+ 2. install metricbeat installation on ansible nodes by playbook.
+----------------------------------------------------------------------------------------------------------------------------------------
+Task-4, 03-06-2023
+-----------------------
+ 1. install NOPCommerce Manually.
+ 2. write a playbook for NOPCommerce and make it install on nodes.
+----------------------------------------------------------------------------------------------------------------------------------------
+Task-5, 04-06-2023
+-----------------------
+ 1. Install the below applications manually.
+    1. Broadleaf
+    2. OpenMRS
+ 2. After successful Installations of above applications write playbooks execute them.
