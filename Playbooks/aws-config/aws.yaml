@@ -14,7 +14,8 @@
         dest: /home/devops 
         mode: '0755' 
     - name: shell
-      ansible.builtin.shell: 
-        cmd: sh r.sh 
+      ansible.builtin.shell: sh r.sh  source r.sh
+       
+       
 
     
