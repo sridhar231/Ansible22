@@ -1,0 +1,14 @@
+---
+- name: aws-cli install
+  ansible.builtin.apt:
+    name: awscli
+    state: present
+- name: copy sh file
+  ansible.builtin.copy:
+    src: r.sh
+    dest: /home/devops 
+    mode: '0755' 
+- name: shell
+  ansible.builtin.shell: r.sh 
+
+    

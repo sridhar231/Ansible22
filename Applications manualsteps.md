@@ -249,6 +249,7 @@ $ Now check in browser as"http://<external IP>:8080/gameoflife
  This application reqires Java-17
 
  sudo apt update 
+ 
  sudo apt install openjdk-17-jdk maven -y
  git clone https://github.com/spring-projects/spring-petclinic.git
  cd spring-petclinic
